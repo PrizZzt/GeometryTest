@@ -38,24 +38,32 @@
 			// 
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(1345, 753);
+			this.pictureBox1.Size = new System.Drawing.Size(1009, 612);
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
+			this.pictureBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ReleaseKey);
+			this.pictureBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PressKey);
+			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			// 
 			// timer1
 			// 
 			this.timer1.Enabled = true;
+			this.timer1.Interval = 10;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1345, 753);
+			this.ClientSize = new System.Drawing.Size(1009, 612);
 			this.Controls.Add(this.pictureBox1);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "Form1";
 			this.Text = "Form1";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PressKey);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ReleaseKey);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GeometryTest
 {
@@ -29,11 +30,23 @@ namespace GeometryTest
 		}
 
 		public void Update(float deltaTime)
-		{ }
+		{
+			foreach (var obj in ObjectList)
+			{
+				obj.Update(deltaTime);
+			}
+		}
 
 		public void AddObject(Object obj)
 		{
-			ObjectList.Add(obj);
+			for (int i = 0; i < 4; i++)
+			{
+				if (Objects[(int)Math.Round(obj.X), (int)Math.Round(obj.Y), i] == null)
+				{
+					Objects[(int)Math.Round(obj.X), (int)Math.Round(obj.Y), i] = obj;
+					ObjectList.Add(obj);
+				}
+			}
 		}
 	}
 }
