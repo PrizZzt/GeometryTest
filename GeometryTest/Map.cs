@@ -45,6 +45,7 @@ namespace GeometryTest
 				{
 					Objects[(int)Math.Round(obj.X), (int)Math.Round(obj.Y), i] = obj;
 					ObjectList.Add(obj);
+					return;
 				}
 			}
 		}

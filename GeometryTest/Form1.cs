@@ -11,9 +11,14 @@ namespace GeometryTest
 		Object player;
 		bool up, down, right, left;
 
+		Graphics g;
+		Brush b = new SolidBrush(Color.Red);
+		Pen p = new Pen(Color.Green);
+
 		public Form1()
 		{
 			InitializeComponent();
+			g = pictureBox1.CreateGraphics();
 
 			map = new Map(20, 12);
 			map.Blocks[5, 5] = true;
@@ -30,9 +35,6 @@ namespace GeometryTest
 
 			map.Update((float)timer1.Interval / 1000);
 
-			var g = pictureBox1.CreateGraphics();
-			var b = new SolidBrush(Color.Red);
-			var p = new Pen(Color.Green);
 			for (int j = 0; j < map.SizeY; j++)
 			{
 				for (int i = 0; i < map.SizeX; i++)

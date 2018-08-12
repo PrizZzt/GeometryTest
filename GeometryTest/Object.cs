@@ -30,10 +30,31 @@ namespace GeometryTest
 		public void Update(float deltaTime)
 		{
 			if (MoveDirectionX != 0 || MoveDirectionY != 0)
-				Move(deltaTime);
+			{
+				if (Move(deltaTime) == false)
+				{
+					if (MoveDirectionX != 0 && MoveDirectionY != 0)
+					{
+						if (MoveDirectionX != 0)
+						{
+							float MoveDirectionXSave = MoveDirectionX;
+							MoveDirectionX = 0;
+							Move(deltaTime);
+							MoveDirectionX = MoveDirectionXSave;
+						}
+						if (MoveDirectionY != 0)
+						{
+							float MoveDirectionYSave = MoveDirectionY;
+							MoveDirectionY = 0;
+							Move(deltaTime);
+							MoveDirectionY = MoveDirectionYSave;
+						}
+					}
+				}
+			}
 		}
 
-		public void Move(float deltaTime)
+		public bool Move(float deltaTime)
 		{
 			int XIndex = (int)Math.Floor(X);
 			int YIndex = (int)Math.Floor(Y);
@@ -43,7 +64,7 @@ namespace GeometryTest
 			int NewYIndex = (int)Math.Floor(NewY);
 
 			if (NewXIndex < 0 || NewXIndex >= Map.SizeX || NewYIndex < 0 || NewYIndex >= Map.SizeY)
-				return;
+				return false;
 
 			for (int j = -1; j < 2; j++)
 			{
@@ -52,13 +73,27 @@ namespace GeometryTest
 					if (NewXIndex + i < 0 || NewXIndex + i >= Map.SizeX || NewYIndex + j < 0 || NewYIndex + j >= Map.SizeY)
 						continue;
 
+					if (Map.Blocks[NewXIndex + i, NewYIndex + j])
+					{
+						float blockX = NewXIndex + i + 0.5f;
+						float blockY = NewYIndex + j + 0.5f;
+
+						if (
+							(NewX - R < blockX + 0.5) &&
+							(NewX + R > blockX - 0.5) &&
+							(NewY - R < blockY + 0.5) &&
+							(NewY + R > blockY - 0.5)
+							)
+							return false;
+					}
+
 					for (int k = 0; k < 4; k++)
 					{
 						Object target = Map.Objects[NewXIndex + i, NewYIndex + j, k];
 						if (target != null && target != this)
 						{
 							if (((target.X - NewX) * (target.X - NewX) + (target.Y - NewY) * (target.Y - NewY)) < (target.R + R))
-								return;
+								return false;
 						}
 					}
 				}
@@ -86,6 +121,7 @@ namespace GeometryTest
 
 			X = NewX;
 			Y = NewY;
+			return true;
 		}
 	}
 }
