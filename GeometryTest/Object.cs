@@ -78,12 +78,7 @@ namespace GeometryTest
 						float blockX = NewXIndex + i + 0.5f;
 						float blockY = NewYIndex + j + 0.5f;
 
-						if (
-							(NewX - R < blockX + 0.5) &&
-							(NewX + R > blockX - 0.5) &&
-							(NewY - R < blockY + 0.5) &&
-							(NewY + R > blockY - 0.5)
-							)
+						if (IsBlocking(NewX, NewY, blockX, blockY))
 							return false;
 					}
 
@@ -122,6 +117,22 @@ namespace GeometryTest
 			X = NewX;
 			Y = NewY;
 			return true;
+		}
+
+		private bool IsBlocking(float x, float y, float blockX, float blockY)
+		{
+			var distX = Math.Abs(x - blockX);
+			var distY = Math.Abs(y - blockY);
+
+			if (distX >= (0.5 + R)) return false;
+			if (distY >= (0.5 + R)) return false;
+
+			if (distX < 0.5) { return true; }
+			if (distY < 0.5) { return true; }
+
+			var dx = distX - 0.5;
+			var dy = distY - 0.5;
+			return (dx * dx + dy * dy < (R * R));
 		}
 	}
 }

@@ -22,18 +22,24 @@ namespace GeometryTest
 
 			map = new Map(20, 12);
 			map.Blocks[5, 5] = true;
+			map.Blocks[7, 5] = true;
 
 			player = new Object(map, 10, 10);
 			map.AddObject(player);
 			map.AddObject(new Object(map, 5, 10));
 		}
 
-		private void timer1_Tick(object sender, System.EventArgs e)
+		private void timer1_Tick(object sender, EventArgs e)
 		{
 			player.MoveDirectionX = right ? 1 : (left ? -1 : 0);
 			player.MoveDirectionY = up ? -1 : (down ? 1 : 0);
 
 			map.Update((float)timer1.Interval / 1000);
+
+			foreach (var obj in map.ObjectList)
+			{
+				g.DrawEllipse(p, (obj.X - obj.R) * CellSize, (obj.Y - obj.R) * CellSize, obj.R * 2 * CellSize, obj.R * 2 * CellSize);
+			}
 
 			for (int j = 0; j < map.SizeY; j++)
 			{
@@ -42,11 +48,6 @@ namespace GeometryTest
 					if (map.Blocks[i, j])
 						g.FillRectangle(b, i * CellSize, j * CellSize, CellSize, CellSize);
 				}
-			}
-
-			foreach (var obj in map.ObjectList)
-			{
-				g.DrawEllipse(p, (obj.X - obj.R) * CellSize, (obj.Y - obj.R) * CellSize, obj.R * 2 * CellSize, obj.R * 2 * CellSize);
 			}
 		}
 
